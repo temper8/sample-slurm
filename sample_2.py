@@ -1,11 +1,24 @@
 from simple_slurm import Slurm
 NT= 10
 task_list = [ f'task_{id}' for id in range(NT)]
+with open("task_array.txt", "w") as f:
+    for id in range(NT):
+        f.write(f'{id}    task_{id}\n')
+
 slurm = Slurm(
     array=range(NT),
     cpus_per_task=1,
-    job_name='demo_name',
+    job_name='sample 2',
     #dependency=dict(after=65541, afterok=34987),
     output=f'{Slurm.JOB_ARRAY_MASTER_ID}_{Slurm.JOB_ARRAY_ID}.out',
 )
-slurm.sbatch(f'echo {task_list[Slurm.SLURM_ARRAY_TASK_ID]}')
+
+# Specify the path to the config file
+slurm.add_cmd("tasks_array=task_array.txt")
+# Extract the sample name for the current $SLURM_ARRAY_TASK_ID
+slurm.add_cmd("work_dir=$(awk -v ArrayTaskID=$SLURM_ARRAY_TASK_ID '$1==ArrayTaskID {print $2}' $tasks_array)")
+slurm.add_cmd('echo "Environment setup complete"')
+print(slurm)
+# Print to a file a message that includes the current $SLURM_ARRAY_TASK_ID and work_dir
+cmd = "echo 'This is array task ${SLURM_ARRAY_TASK_ID}, the work_dir is ${work_dir}.'"
+slurm.sbatch(cmd)
