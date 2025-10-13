@@ -20,5 +20,5 @@ slurm.add_cmd("work_dir=$(awk -v ArrayTaskID=$SLURM_ARRAY_TASK_ID '$1==ArrayTask
 slurm.add_cmd('echo "Environment setup complete"')
 print(slurm)
 # Print to a file a message that includes the current $SLURM_ARRAY_TASK_ID and work_dir
-cmd = "echo 'This is array task ${SLURM_ARRAY_TASK_ID}, the work_dir is ${work_dir}.'"
+cmd = 'echo "This is array task ${SLURM_ARRAY_TASK_ID}, the work_dir is ${work_dir}."'
 slurm.sbatch(cmd)
