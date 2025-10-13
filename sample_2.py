@@ -21,3 +21,12 @@ slurm.add_cmd('echo "Environment setup complete"')
 print(slurm)
 # Print to a file a message that includes the current $SLURM_ARRAY_TASK_ID and work_dir
 slurm.sbatch('./demo.sh ${SLURM_ARRAY_TASK_ID} ${work_dir}.')
+
+slurm.squeue.update_squeue()  # Fetch latest job data
+slurm.squeue.display_jobs()
+
+# Get the jobs as a dictionary
+jobs = slurm.squeue.jobs
+
+for job_id, job in jobs.items():
+    print(job)
