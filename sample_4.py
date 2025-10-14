@@ -44,7 +44,7 @@ while True:
 
 for task in tasks:
     id = task['id']
-    with open(job_dir / "time_task_{id}.txt", "r") as f:
+    with open(job_dir / f"time_task_{id}.txt", "r") as f:
         task['time'] = int(f.readline())
 
 with open(job_dir / "time_done_list.txt", "w") as f:
