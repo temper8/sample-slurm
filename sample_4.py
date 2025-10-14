@@ -23,7 +23,7 @@ slurm = Slurm(
 
 print(slurm)
 # Print to a file a message that includes the current $SLURM_ARRAY_TASK_ID and work_dir
-slurm.sbatch('./runer.sh ${SLURM_ARRAY_TASK_ID} job_dir')
+slurm.sbatch("./runer.sh ${SLURM_ARRAY_TASK_ID} " +  job_dir.as_posix())
 
 slurm.squeue.update_squeue()  # Fetch latest job data
 slurm.squeue.display_jobs()
