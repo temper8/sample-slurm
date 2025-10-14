@@ -49,4 +49,4 @@ for task in tasks:
 
 with open(job_dir / "time_done_list.txt", "w") as f:
     for task in tasks:
-        f.write(f'{task['id']} task['name'] task['time']\n')
+        f.write(f"{task['id']} {task['name']} {task['time']}\n")
