@@ -18,7 +18,7 @@ slurm = Slurm(
     cpus_per_task=1,
     job_name='sample_4',
     #dependency=dict(after=65541, afterok=34987),
-    output=f'{Slurm.JOB_ARRAY_MASTER_ID}_{Slurm.JOB_ARRAY_ID}.out',
+    output=(job_dir / f'task_{Slurm.JOB_ARRAY_ID}.out').as_posix(),
 )
 
 print(slurm)
