@@ -4,12 +4,13 @@ slurm = Slurm(
     cpus_per_task=1,
     job_name='sample_3',
     #dependency=dict(after=65541, afterok=34987),
-    output=f'{Slurm.JOB_ARRAY_MASTER_ID}_{Slurm.JOB_ARRAY_ID}.out',
+    output=f'{Slurm.JOB_ARRAY_MASTER_ID}.out',
 )
 
 print(slurm)
 # Print to a file a message that includes the current $SLURM_ARRAY_TASK_ID and work_dir
 for id in range(NT):
+    slurm.set
     slurm.sbatch(f'./demo.sh {id} task_{id}')
 
 slurm.squeue.update_squeue()  # Fetch latest job data
