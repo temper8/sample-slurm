@@ -1,3 +1,4 @@
+import time
 from simple_slurm import Slurm
 NT= 10
 task_list = [ f'task_{id}' for id in range(NT)]
@@ -29,4 +30,11 @@ slurm.squeue.display_jobs()
 jobs = slurm.squeue.jobs
 
 for job_id, job in jobs.items():
-    print(job)
+    print(job_id)
+
+while True:
+    time.sleep(10)
+    slurm.squeue.update_squeue()
+    num_jobs= len(slurm.squeue.jobs)
+    print(f"Jobs {num_jobs}")
+    if num_jobs == 0: break
