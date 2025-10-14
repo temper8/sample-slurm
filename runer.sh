@@ -1,7 +1,8 @@
 hostname
 echo "Task $1, job_dir $2."
-tasks_array=$2 'task_array.txt'
-task_dir=$2 '/' $(awk -v ArrayTaskID=$1 '$1==ArrayTaskID {print $2}' $tasks_array)
+tasks_array="$2/task_array.txt"
+task='/' $(awk -v ArrayTaskID=$1 '$1==ArrayTaskID {print $2}' $tasks_array)
+task_dir = "$2/$task"
 echo "This is array task $1, the work_dir is $task_dir."
 START=$(date +%s)
 echo "Start : $START"
