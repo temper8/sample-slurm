@@ -8,7 +8,7 @@ now = datetime.now()
 job_dir = pathlib.Path('results') / now.strftime("%Y-%m-%d_%H-%M-%S")
 job_dir.mkdir()
 NT= 10
-task_list = [ f'task_{id}' for id in range(NT)]
+tasks = [ dict(id= id, name= f'task_{id}' ) for id in range(NT)]
 with open(job_dir / "task_array.txt", "w") as f:
     for id in range(NT):
         f.write(f'{id}    task_{id}\n')
@@ -40,3 +40,13 @@ while True:
     print(f"Jobs {num_jobs}")
     if num_jobs == 0: break
     time.sleep(10)
+
+
+for task in tasks:
+    id = task['id']
+    with open(job_dir / "time_task_{id}.txt", "r") as f:
+        task['time'] = int(f.readline())
+
+with open(job_dir / "time_done_list.txt", "w") as f:
+    for task in tasks:
+        f.write(f'{task['id']} task['name'] task['time']\n')
