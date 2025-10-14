@@ -11,3 +11,4 @@ END=$(date +%s)
 DIFF=$(( $END - $START ))
 echo "End : $END"
 echo "It took $DIFF seconds"
+echo $task $DIFF >> "$2/task_time.txt"
