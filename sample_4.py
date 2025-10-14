@@ -1,8 +1,15 @@
+from datetime import datetime
+import os
+import pathlib
 import time
 from simple_slurm import Slurm
+
+now = datetime.now()
+job_dir = pathlib.Path('results') / now.strftime("%Y-%m-%d_%H-%M-%S")
+job_dir.mkdir()
 NT= 10
 task_list = [ f'task_{id}' for id in range(NT)]
-with open("task_array.txt", "w") as f:
+with open(job_dir / "task_array.txt", "w") as f:
     for id in range(NT):
         f.write(f'{id}    task_{id}\n')
 
@@ -16,7 +23,7 @@ slurm = Slurm(
 
 print(slurm)
 # Print to a file a message that includes the current $SLURM_ARRAY_TASK_ID and work_dir
-slurm.sbatch('./runer.sh ${SLURM_ARRAY_TASK_ID}')
+slurm.sbatch('./runer.sh ${SLURM_ARRAY_TASK_ID} {job_dir}')
 
 slurm.squeue.update_squeue()  # Fetch latest job data
 slurm.squeue.display_jobs()
