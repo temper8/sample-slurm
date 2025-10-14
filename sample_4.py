@@ -23,7 +23,7 @@ slurm = Slurm(
 
 print(slurm)
 # Print to a file a message that includes the current $SLURM_ARRAY_TASK_ID and work_dir
-slurm.sbatch('./runer.sh ${SLURM_ARRAY_TASK_ID} {job_dir}')
+slurm.sbatch('./runer.sh ${SLURM_ARRAY_TASK_ID} job_dir')
 
 slurm.squeue.update_squeue()  # Fetch latest job data
 slurm.squeue.display_jobs()
@@ -35,8 +35,8 @@ for job_id, job in jobs.items():
     print(job_id)
 
 while True:
-    time.sleep(10)
     slurm.squeue.update_squeue()
     num_jobs= len(slurm.squeue.jobs)
     print(f"Jobs {num_jobs}")
     if num_jobs == 0: break
+    time.sleep(10)
